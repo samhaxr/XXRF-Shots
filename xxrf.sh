@@ -1,9 +1,10 @@
 #!/bin/bash
 #!Coded by Suleman Malik
 #!www.sulemanmalik.com
+
 dt(){
 rm /tmp/rs_temp
-rm /tmp/_bck_
+rm injected-payload
 rm -r screenshots
 }
 function ln(){
@@ -36,7 +37,7 @@ len=$(wc -l < xsrfpd | sed 's/ //g')
 elap=0
 while read ssrf
 do
-echo $url$ssrf >> /tmp/_bck_
+echo $url$ssrf >> injected-payload
 Cmd='curl --silent -I $url$ssrf --max-time 5 >> /tmp/rs_temp &'
 elap=$(expr $elap + 1)
 echo -ne "\033[0;31m[[+]\033[0m \033[0;33m Injecting Payload:\033[0m: $elap/$len\r"
@@ -47,7 +48,7 @@ echo ' '
 echo -e "\033[0;32m [+]\033[0m Loading..."
 echo ' '
 echo -e "\033[0;32m [+]\033[0m Taking screenshots"
-scr=$(python WS -i /tmp/_bck_ -t5 )
+scr=$(python WS -i injected-payload -t5 )
 echo ''
 echo -e "\033[0;32m [+]\033[0m Screenshots saved successfully."
 out
